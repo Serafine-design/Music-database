@@ -10,7 +10,7 @@ def find_song_using_genre():
     cursor.execute(sql)
     results = cursor.fetchall()
 
-    usergenre = input('What genre do you want?\n1. Hip Hop\n2. Jazz\n3. Religious\n4. Rock\n5. J-pop\n6. K-pop\n7. Classical\n8. Rap\n9. Pop\n10. EDM\n12. Alternative rock\n13. Soul\n14. Funk\n')
+    usergenre = input('What genre do you want?\n1. Hip Hop\n2. Jazz\n3. Religious\n4. Rock\n5. J-pop\n6. K-pop\n7. Classical\n8. Rap\n9. Pop\n10. EDM\n11. Alternative rock\n12. Soul\n13. Funk\n')
     while True:
         try:
             usergenre = int(usergenre)

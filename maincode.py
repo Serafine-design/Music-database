@@ -1,28 +1,50 @@
 import sqlite3
 
-Database = 'music.db'
+def print_all_songs():
+    '''print all songs'''
+    Database = 'music.db'
 
-db = sqlite3.connect(Database)
-cursor = db.cursor()
-sql = "SELECT * FROM music;"
-cursor.execute(sql)
-results = cursor.fetchall()
+    db = sqlite3.connect(Database)
+    cursor = db.cursor()
+    sql = "SELECT * FROM music;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
 
-for music in results:
-    print(f"Music: {music[1]}")
+    for music in results:
+        print(f"Music: {music[1]}")
 
-db.close()
-import sqlite3
+    db.close()
 
-Database = 'music.db'
+def find_song_using_genre():
+    '''Enter genre to find song'''
+    Database = 'music.db'
+    number = 1
+    db = sqlite3.connect(Database)
+    cursor = db.cursor()
+    sql = "SELECT * FROM music;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
 
-db = sqlite3.connect(Database)
-cursor = db.cursor()
-sql = "SELECT * FROM music;"
-cursor.execute(sql)
-results = cursor.fetchall()
+    usergenre = input('What genre do you want?\n1. Hip Hop\n2. Jazz\n3. Religious\n4. Rock\n5. J-pop\n6. K-pop\n7. Classical\n8. Rap\n9. Pop\n10. EDM\n11. Alternative rock\n12. Soul\n13. Funk\n')
+    while True:
+        try:
+            usergenre = int(usergenre)
+            if usergenre > 15:
+                usergenre = input('please enter a valid number\n')
+            else:
+                for music in results:
+                    if music[3] == usergenre:
+                        print(music[1])
+                break
+        except ValueError:
+            usergenre = input('Please enter a valid number\n')
+        
+    db.close()
 
-for music in results:
-    print(f"Music: {music[1]}")
+# Main code
 
-db.close()
+userinput = int(input('1 or 2'))
+if userinput == 1:
+    print_all_songs()
+elif userinput == 2:
+    find_song_using_genre()
