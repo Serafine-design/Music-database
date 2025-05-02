@@ -70,12 +70,36 @@ def find_song_using_artist():
             break
     db.close()
 
-# Main code
 
-userinput = int(input('1 or 2 or 3'))
-if userinput == 1:
-    print_all_songs()
-elif userinput == 2:
-    find_song_using_genre()
-elif userinput == 3:
-    find_song_using_artist()
+
+def main_code():
+    '''main code'''
+    userinput = input('1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n Exit \n')
+    global quit
+    while True:
+        try:
+            userinput = int(userinput)
+            if userinput == 1:
+                print_all_songs()
+                break
+            elif userinput == 2:
+                find_song_using_genre()
+                break
+            elif userinput == 3:
+                find_song_using_artist()
+                break
+            elif userinput == 4:
+                quit = "yes"
+                break
+            else:
+                userinput = input("Please enter a valid number\n")
+        except ValueError:
+            userinput = input('Please enter a valid number\n')
+
+
+#main code
+
+quit = "no"
+while quit =="no":
+    main_code()
+    
