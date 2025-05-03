@@ -6,7 +6,7 @@ def find_song_using_genre():
     number = 1
     db = sqlite3.connect(Database)
     cursor = db.cursor()
-    sql = "SELECT * FROM music;"
+    sql = "SELECT * From music JOIN artist ON music.artist_id = artist.artist_id;"
     cursor.execute(sql)
     results = cursor.fetchall()
 
@@ -17,13 +17,12 @@ def find_song_using_genre():
             if usergenre > 15:
                 usergenre = input('please enter a valid number\n')
             else:
+                print(f"Name                                              Artist              Streams on spotify")
                 for music in results:
                     if music[3] == usergenre:
-                        print(music[1])
+                        print(f"{music[1]:<50}{music[6]:<20}{music[4]}")
                 break
         except ValueError:
             usergenre = input('Please enter a valid number\n')
-        
-    db.close()
 
 find_song_using_genre()

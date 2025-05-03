@@ -17,7 +17,7 @@ def find_song_using_artist():
     while True:
         print('')
         for artist in results:
-            if userartist == artist[5].upper():
+            if userartist == artist[6].upper():
                 for genre in result2:
                     if genre[1] == artist[1]:
                         print(f"{artist[1]:<30}{genre[5]}")

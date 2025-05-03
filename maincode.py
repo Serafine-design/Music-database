@@ -32,9 +32,10 @@ def find_song_using_genre():
             if usergenre > 15:
                 usergenre = input('please enter a valid number\n')
             else:
+                print(f"Name                                              Artist              Streams on spotify")
                 for music in results:
                     if music[3] == usergenre:
-                        print(f"{music[1]:<50}{music[5]}")
+                        print(f"{music[1]:<50}{music[6]:<20}{music[4]}")
                 break
         except ValueError:
             usergenre = input('Please enter a valid number\n')
