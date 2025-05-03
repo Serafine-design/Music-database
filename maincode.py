@@ -2,7 +2,7 @@ import sqlite3
 
 def print_all_songs():
     '''print all songs'''
-    Database = 'music.db'
+    Database = 'musicwithstream.db'
 
     db = sqlite3.connect(Database)
     cursor = db.cursor()
@@ -17,7 +17,7 @@ def print_all_songs():
 
 def find_song_using_genre():
     '''Enter genre to find song'''
-    Database = 'music.db'
+    Database = 'musicwithstream.db'
     number = 1
     db = sqlite3.connect(Database)
     cursor = db.cursor()
@@ -44,7 +44,7 @@ def find_song_using_genre():
 def find_song_using_artist():
     '''Enter genre to find song'''
     artistcheck = 0
-    Database = 'music.db'
+    Database = 'musicwithstream.db'
     number = 1
     db = sqlite3.connect(Database)
     cursor = db.cursor()
@@ -74,7 +74,7 @@ def find_song_using_artist():
 
 def main_code():
     '''main code'''
-    userinput = input('1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n Exit \n')
+    userinput = input('1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n4. Exit \n')
     global quit
     while True:
         try:

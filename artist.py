@@ -3,7 +3,7 @@ import sqlite3
 def find_song_using_artist():
     '''Enter genre to find song'''
     artistcheck = 0
-    Database = 'music.db'
+    Database = 'musicwithstream.db'
     number = 1
     db = sqlite3.connect(Database)
     cursor = db.cursor()
