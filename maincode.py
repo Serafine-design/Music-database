@@ -23,6 +23,7 @@ def print_song_name_desc():
     print('Name                                              Artist              Genre               Streams on spotify')
     for music in results:
         print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
+
 def print_song_stream_asc():
     Database = 'musicwithstream.db'
 
@@ -34,6 +35,7 @@ def print_song_stream_asc():
     print('Name                                              Artist              Genre               Streams on spotify')
     for music in results:
         print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
+
 def print_song_stream_desc():
     Database = 'musicwithstream.db'
 
@@ -57,31 +59,32 @@ def print_all_songs():
             break
         try:
             userinput = int(userinput)
+            if userinput == 1:
+                print('How should I print the songs')
+                userinput2 = input('1. Alphabetical order\n2. Reverse alphabetical order.\n')
+                while True:
+                    try: 
+                        userinput2 = int(userinput2)
+                        if userinput2 == 1:
+                            print_song_name_asc()
+                            count = count + 1
+                            break
+                        elif userinput2 == 2:
+                            print_song_name_desc()
+                            count = count + 1
+                            break
+                        else:
+                            userinput2 = input('plase enter a valid number\n')
+                    except ValueError:
+                        userinput2 = input('please enter a valid number\n')
+            elif userinput == 2:
+                print_song_stream_desc()
+                break
+            else:
+                userinput = input('Please enter a valid number\n')
         except ValueError:
             userinput = input('please enter a valid number\n')
-        if userinput == 1:
-            print('How should I print the songs')
-            userinput2 = input('1. Alphabetical order\n2. Reverse alphabetical order.\n')
-            while True:
-                try: 
-                    userinput2 = int(userinput2)
-                    if userinput2 == 1:
-                        print_song_name_asc()
-                        count = count + 1
-                        break
-                    elif userinput2 == 2:
-                        print_song_name_desc()
-                        count = count + 1
-                        break
-                    else:
-                        userinput2 = input('plase enter a valid number\n')
-                except ValueError:
-                    userinput2 = input('please enter a valid number\n')
-        elif userinput == 2:
-            print_song_stream_desc()
-            break
-        else:
-            userinput = input('Please enter a valid number\n')
+
 
 def find_song_using_genre():
     '''Enter genre to find song'''
@@ -138,11 +141,31 @@ def find_song_using_artist():
             check = 0
     db.close()
 
+def print_random_song():
+    import random
+    Database = 'musicwithstream.db'
+
+    db = sqlite3.connect(Database)
+    cursor = db.cursor()
+    sql = "Select music_id, music, streams, artist, genre from music INNER JOIN artist on music.artist_id = artist.artist_id INNER JOIN genre on music.genre_id = genre.genre_id;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    number = (random.randint(0,79))
+    while True:
+        try:
+            number = int(number)
+            break
+        except ValueError:
+            number = (random.randint(0,79))
+    print('Name                                              Artist              Genre               Streams on spotify')
+    for music in results:
+        if music[0] == number:
+            print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]:<20}")
 
 
 def main_code():
     '''main code'''
-    userinput = input('1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n4. Exit \n')
+    userinput = input("1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n4. Don't know what you want? \n5. EXIT\n")
     global quit
     while True:
         try:
@@ -157,6 +180,9 @@ def main_code():
                 find_song_using_artist()
                 break
             elif userinput == 4:
+                print_random_song()
+                break
+            elif userinput == 5:
                 quit = "yes"
                 break
             else:
