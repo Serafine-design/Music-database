@@ -7,7 +7,7 @@ def print_song_name_asc():
     cursor = db.cursor()
     sql = "Select music, streams, artist, genre from music INNER JOIN artist on music.artist_id = artist.artist_id INNER JOIN genre on music.genre_id = genre.genre_id order by music asc;"
     cursor.execute(sql)
-    results = cursor.fetchall   	()
+    results = cursor.fetchall()
     print('Name                                              Artist              Genre               Streams on spotify')
     for music in results:
         print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
@@ -162,10 +162,43 @@ def print_random_song():
         if music[0] == number:
             print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]:<20}")
 
+def enter_song_to_print():
+    breaks = False
+    check = 0
+    import random
+    Database = 'musicwithstream.db'
+    db = sqlite3.connect(Database)
+    cursor = db.cursor()
+    sql = "Select music_id, music, streams, artist, genre from music INNER JOIN artist on music.artist_id = artist.artist_id INNER JOIN genre on music.genre_id = genre.genre_id;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    while True:
+        if breaks:
+            break
+        while True:
+            if check == 0:
+                songinput = input("Please enter your song name or type in exit to exit.\n").upper()
+            elif check > 0:
+                    songinput = input("Please enter a valid song.\n").upper()
+                    check = 0
+            if songinput == 'EXIT':
+                breaks = True
+                break
+            else:
+                for music in results:
+                    if songinput == music[1].upper():
+                        print('Name                                              Artist              Genre               Streams on spotify')
+                        print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]:<20}")
+                        check = 0
+                        break
+                    else:    
+                        check = check + 1
+
+
 
 def main_code():
     '''main code'''
-    userinput = input("1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n4. Don't know what you want? \n5. EXIT\n")
+    userinput = input("1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n4. Don't know what you want? \n5. Enter song name to find details\n6. EXIT\n")
     global quit
     while True:
         try:
@@ -183,7 +216,10 @@ def main_code():
                 print_random_song()
                 break
             elif userinput == 5:
-                quit = "yes"
+                enter_song_to_print()
+                break
+            elif userinput == 6:    
+                quit = 'yes'
                 break
             else:
                 userinput = input("Please enter a valid number\n")
