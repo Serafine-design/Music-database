@@ -242,6 +242,7 @@ def enter_song_to_print():
                 for music in results:
                     # Print results nicely
                     if songinput == music[1].upper():
+                        print('')
                         print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")
                         print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]:<20}")
                         check = 0
