@@ -1,6 +1,7 @@
 # music database code
 # import databse
 import sqlite3
+# Variables
 global one
 one = 1
 global two
@@ -54,19 +55,25 @@ def print_song_stream_asc_min():
     while True:
         try:
             usermargin = int(usermargin)
-            for music in results:
-                if music[1] >= usermargin:
-                    check = check + one
-            if check == zero:
-                usermargin = input(f'There are no songs that have a higher stream count then {usermargin} please input another number\n')
+            # Check for invalid inputs
+            if usermargin < zero:
+                usermargin = input('No music can have negative streams\n')
             else:
-                print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")
                 for music in results:
                     if music[1] >= usermargin:
-                        print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
-                break
+                        check = check + one
+                if check == zero:
+                    usermargin = input(f'There are no songs that have a higher stream count then {usermargin} please input another number\n')
+                # Print results nicely
+                else:
+                    print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")
+                    for music in results:
+                        if music[1] >= usermargin:
+                            print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
+                    break
+        # Check for value errors
         except ValueError:
-            usermargin = input('Please enter a valid number\n')
+            usermargin = input('Please enter a valid integer\n')
 
 # print songs depending on stream count descending after choosing maximum
 def print_song_stream_desc_max():
@@ -79,23 +86,30 @@ def print_song_stream_desc_max():
     sql = "Select music, streams, artist, genre from music INNER JOIN artist on music.artist_id = artist.artist_id INNER JOIN genre on music.genre_id = genre.genre_id order by streams desc;"
     cursor.execute(sql)
     results = cursor.fetchall()
+    # Ask for user input
     usermargin = input('What is the maximum amount of streams a song should have?\n')
     while True:
         try:
             usermargin = int(usermargin)
-            for music in results:
-                if music[1] <= usermargin:
-                    check = check + one
-            if check == zero:
-                usermargin = input(f'There are no songs that have a lower stream count then {usermargin} please input another number\n')
+            # Check for invalid inputs
+            if usermargin < zero:
+                usermargin = input('No songs can have negative streams\n')
             else:
-                print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")
                 for music in results:
                     if music[1] <= usermargin:
-                        print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
-                break
+                        check = check + one
+                if check == zero:
+                    usermargin = input(f'There are no songs that have a lower stream count then {usermargin} please input another number\n')
+                # print results nicely
+                else:
+                    print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")
+                    for music in results:
+                        if music[1] <= usermargin:
+                            print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]:<20}")
+                    break
+        # Check for value errors
         except ValueError:
-            usermargin = input('Please enter a valid number\n')
+            usermargin = input('Please enter a valid integer\n')
 # print songs depending on stream count ascending
 def print_song_stream_asc():
     '''Printing according to number of streams from smallest to biggest'''
@@ -126,11 +140,13 @@ def print_song_stream_desc():
     for music in results:
         print(f"{music[0]:<50}{music[2]:<20}{music[3]:<20}{music[1]}")
 
-# print songs depending on stream count ascending
+# print songs according to stream
 def print_according_to_stream():
     '''Printing according to number of streams based on user input'''
     print('How should I print according to streams')
+    # Ask for input
     userinput = input('1. Print from smallest to largest\n2. Print from largest to smallest\n3. Choose minimum stream count\n4. Choose maximim stream count\n')
+    # act on input
     while True:
         try:
             userinput = int(userinput)
@@ -145,8 +161,11 @@ def print_according_to_stream():
                 break
             elif userinput == 4:
                 print_song_stream_desc_max()
+                break
+            # Check for invalid inputs
             else:
                 userinput = input('Please input a valid number\n')
+        # Check for value errors
         except ValueError:
             userinput = input('Please input a valid number\n')
 
@@ -214,6 +233,8 @@ def find_song_using_genre():
         try:
             usergenre = int(usergenre)
             if usergenre > numberofgenres:
+                usergenre = input('please enter a valid number\n')
+            elif usergenre <= zero:
                 usergenre = input('please enter a valid number\n')
             else:
                 # Print the results nicely
@@ -288,6 +309,7 @@ def print_random_song():
         except ValueError:
             number = (random.randint(0,79))
     # Print results nicely
+    print('Try this song')
     print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")    
     for music in results:
         # Go through database to find result
@@ -318,7 +340,7 @@ def enter_song_to_print():
             if check == zero:
                 songinput = input("Please enter your song name or type in exit to exit.\n").upper()
             elif check > zero:
-                    songinput = input("Please enter a valid song.\n").upper()
+                    songinput = input("Song not in database\n").upper()
                     check = zero
             #Check if the user wants the loop to stop
             if songinput == 'EXIT':
