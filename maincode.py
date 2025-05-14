@@ -287,12 +287,12 @@ def print_random_song():
         # Check if number is a float
         except ValueError:
             number = (random.randint(0,79))
-        # Print results nicely
-        print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")    
-        for music in results:
-            # Go through database to find result
-            if music[0] == number:
-                print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]}")
+    # Print results nicely
+    print(f"{'Name':<50}{'Artist':<20}{'Genre':<20}{'Streams on spotify'}")    
+    for music in results:
+        # Go through database to find result
+        if music[0] == number:
+            print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]}")
     db.close()
 
 #function to find the details of a song through the name
@@ -344,6 +344,7 @@ def enter_song_to_print():
 def main_code():
     '''main code'''
     # Ask for user input
+    print('What should I do?')
     userinput = input("1. See all songs\n2. Enter genre to find song\n3. Enter artist to find song\n4. Don't know what you want? \n5. Enter song name to find details\n6. EXIT\n")
     global quit
     #depending on input decide which function to run
