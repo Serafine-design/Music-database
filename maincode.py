@@ -398,9 +398,11 @@ def main_code():
         except ValueError:
             userinput = input('Please enter a valid number\n')
 
-
-#main code
+# main code
 # Run main code until the user says to stop
+print('-----------------------------')
+print('Welcome to the music database')
+print('-----------------------------')
 quit = "no"
 while quit =="no":
     main_code()

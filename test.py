@@ -29,4 +29,7 @@ def print_random_song():
             print(f"{music[1]:<50}{music[3]:<20}{music[4]:<20}{music[2]}")
     db.close()
 
+print('-----------------------------')
+print('Welcome to the music database')
+print('-----------------------------')
 print_random_song()
